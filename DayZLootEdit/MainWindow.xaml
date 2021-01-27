@@ -21,7 +21,9 @@
         <Button x:Name="LoadBtn" Content="Load" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="40" Height="40" Click="LoadBtn_Click"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="55,10,0,0" VerticalAlignment="Top" Width="40" Height="40"/>
         <Button x:Name="SaveBtn" Content="Save" HorizontalAlignment="Left" Margin="55,10,0,0" VerticalAlignment="Top" Width="40" Height="40" IsEnabled="False" Click="SaveBtn_Click"/>
-        <DockPanel x:Name="LootPercBox" HorizontalAlignment="Left" Height="55" LastChildFill="False" Margin="31,0,0,0" VerticalAlignment="Top" Width="362" RenderTransformOrigin="3.24,0.757" IsEnabled="False" Grid.Column="1">
+		<Button x:Name="AddBtn" Content="Add Table" HorizontalAlignment="Left" Margin="100,10,0,0" VerticalAlignment="Top" Width="40" Height="40" IsEnabled="False" Click="AddBtn_Click"/>
+		
+		<DockPanel x:Name="LootPercBox" HorizontalAlignment="Left" Height="55" LastChildFill="False" Margin="200,0,0,0" VerticalAlignment="Top" Width="362" RenderTransformOrigin="3.24,0.757" IsEnabled="False" Grid.Column="1">
             <Label x:Name="PercLbl" Content="Nominal Percentage:" Margin="0" VerticalAlignment="Top" Height="28" DockPanel.Dock="Top" RenderTransformOrigin="-0.092,0.379" HorizontalAlignment="Left" Width="119"/>
             <TextBox x:Name="PercBox" Margin="122,-24,0,32" TextWrapping="Wrap" Text="100%" Width="50" RenderTransformOrigin="0.5,0.5" LostFocus="PercBox_LostFocus" KeyUp="PercBox_KeyUp" GotFocus="PercBox_GotFocus"/>
             <Slider x:Name="PercSilder" Margin="-172,0,45,0" Maximum="400" TickFrequency="50" TickPlacement="BottomRight" SmallChange="1" Value="100" DockPanel.Dock="Top" ValueChanged="PercSilder_ValueChanged"/>

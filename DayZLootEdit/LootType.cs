@@ -26,70 +26,89 @@ namespace DayZLootEdit
         public int Nominal
         {
             get { return GetValueInt(xtype, "nominal"); }
-            set { xtype.Element("nominal")?.SetValue(value.ToString()); }
+            set { xtype.Element("nominal")?.SetValue(value); }
         }
 
         public int Lifetime
         {
             get { return Lifetime = GetValueInt(xtype, "lifetime"); }
-            set { xtype.Element("lifetime")?.SetValue(value.ToString()); }
+            set { xtype.Element("lifetime")?.SetValue(value); }
         }
         public int Restock
         {
             get { return GetValueInt(xtype, "restock"); }
-            set { xtype.Element("restock")?.SetValue(value.ToString()); }
+            set { xtype.Element("restock")?.SetValue(value); }
         }
         public int Min
         {
             get { return GetValueInt(xtype, "min"); }
-            set { xtype.Element("min")?.SetValue(value.ToString()); }
+            set { xtype.Element("min")?.SetValue(value); }
         }
         public int QuantMin
         {
             get { return GetValueInt(xtype, "quantmin"); }
-            set { xtype.Element("quantmin")?.SetValue(value.ToString()); }
+            set { xtype.Element("quantmin")?.SetValue(value); }
         }
         public int QuantMax
         {
             get { return GetValueInt(xtype, "quantmax"); }
-            set { xtype.Element("quantmax")?.SetValue(value.ToString()); }
+            set { xtype.Element("quantmax")?.SetValue(value); }
         }
         public int Cost
         {
             get { return GetValueInt(xtype, "cost"); }
-            set { xtype.Element("cost")?.SetValue(value.ToString()); }
+            set { xtype.Element("cost")?.SetValue(value); }
         }
 
         public bool CountInCargo
         {
-            get { return GetFlag(xtype, "count_in_cargo"); }
-            set { xtype.Element("flags")?.Attribute("count_in_cargo")?.SetValue(value.ToString()); }
+            get {
+                return Convert.ToBoolean(GetFlagValueInt(xtype, "count_in_cargo"));
+            }
+            set {
+                xtype.Element("flags")?.Attribute("count_in_cargo")?.SetValue(boolToInt(value)); 
+            }
         }
         public bool CountInHoarder
         {
-            get { return GetFlag(xtype, "count_in_hoarder"); }
-            set { xtype.Element("flags")?.Attribute("count_in_hoarder")?.SetValue(value.ToString()); }
+            get { 
+                //return GetFlag(xtype, "count_in_hoarder");
+                return Convert.ToBoolean(GetFlagValueInt(xtype, "count_in_hoarder"));
+            }
+            set { xtype.Element("flags")?.Attribute("count_in_hoarder")?.SetValue(boolToInt(value)); }
         }
         public bool CountInMap
         {
-            get { return GetFlag(xtype, "count_in_map"); }
-            set { xtype.Element("flags")?.Attribute("count_in_map")?.SetValue(value.ToString()); }
+            get { 
+                //return GetFlag(xtype, "count_in_map");
+                return Convert.ToBoolean(GetFlagValueInt(xtype, "count_in_map"));
+            }
+            set { xtype.Element("flags")?.Attribute("count_in_map")?.SetValue(boolToInt(value)); }
         }
         public bool CountInPlayer
         {
-            get { return GetFlag(xtype, "count_in_player"); }
-            set { xtype.Element("flags")?.Attribute("count_in_player")?.SetValue(value.ToString()); }
+            get { 
+                //return GetFlag(xtype, "count_in_player");
+                return Convert.ToBoolean(GetFlagValueInt(xtype, "count_in_player"));
+            }
+            set { xtype.Element("flags")?.Attribute("count_in_player")?.SetValue(boolToInt(value)); }
         }
 
         public bool Crafted
         {
-            get { return GetFlag(xtype, "crafted"); }
-            set { xtype.Element("flags")?.Attribute("crafted")?.SetValue(value.ToString()); }
+            get { 
+                //return GetFlag(xtype, "crafted");
+                return Convert.ToBoolean(GetFlagValueInt(xtype, "crafted"));
+            }
+            set { xtype.Element("flags")?.Attribute("crafted")?.SetValue(boolToInt(value)); }
         }
         public bool Deloot
         {
-            get { return GetFlag(xtype, "deloot"); }
-            set { xtype.Element("flags")?.Attribute("deloot")?.SetValue(value.ToString()); }
+            get { 
+                //return GetFlag(xtype, "deloot");
+                return Convert.ToBoolean(GetFlagValueInt(xtype, "deloot"));
+            }
+            set { xtype.Element("flags")?.Attribute("deloot")?.SetValue(boolToInt(value)); }
         }
 
         public LootType(XElement xnode)
@@ -123,7 +142,7 @@ namespace DayZLootEdit
             {
                 return string.Join(", ",
                     xtype.Elements().Where(
-                    node => node.Name.LocalName.Equals("usage")
+                    node => node.Name.LocalName.Equals("value")
                     ).Select(
                     node => node.Attribute("name")?.Value
                     ));
@@ -146,10 +165,40 @@ namespace DayZLootEdit
             return val;
         }
 
-        private bool GetFlag(XElement node, string attrib)
+        private int GetFlagValueInt(XElement node, string attrib)
         {
-            return (bool)node.Element("flags")?.Attribute(attrib)?.Value.Equals("1");
+            int val = 0;
+            int.TryParse(node.Element("flags")?.Attribute(attrib)?.Value, out val);
+            return val;
         }
+
+        private int boolToInt(bool b)
+        {
+            return b ? 1 : 0;
+        }
+
+       /* private int ToInt(this bool value)
+        {
+            return*/
+
+
+        /*private int GetFlag(XElement node, string attrib)
+        {
+            GetValueInt(xtype, attrib);
+            //int boolInt;
+            //node.Element("flag")?.Attribute(attrib)?.Value;
+            ;            //return (bool)node.Element("flags")?.Attribute(attrib)?.Value.Equals("1");
+        }*/
+
+       /* private bool SetFlag(XElement node, string attrib)
+        {
+            bool retBool;
+            switch (attrib)
+            {
+                case "true" : retBool = 1; break;
+                case "false": retBool = 0; break;
+            }
+        }*/
 
         public void SetNominal(int percentage)
         {

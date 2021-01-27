@@ -42,6 +42,7 @@ namespace DayZLootEdit
 
                 LootList.IsEnabled = true;
                 SaveBtn.IsEnabled = true;
+                AddBtn.IsEnabled = true;
             }
         }
 
@@ -107,6 +108,13 @@ namespace DayZLootEdit
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             LootTable.SaveFile();
+        }
+
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            LootTable.addTable();
+			LootList.Items.Refresh();
         }
     }
 }
