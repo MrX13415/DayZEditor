@@ -108,5 +108,19 @@ namespace DayZLootEdit
         {
             LootTable.SaveFile();
         }
+
+        private void PreviewKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Delete:
+                case Key.Back:
+                    foreach (LootType loot in LootList.SelectedItems)
+                    {
+                        loot.RemoveType();
+                    }
+                    break;
+            }
+        }
     }
 }
