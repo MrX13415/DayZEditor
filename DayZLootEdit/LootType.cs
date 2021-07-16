@@ -156,6 +156,11 @@ namespace DayZLootEdit
             Nominal = (int) Math.Round(Nominal / 100.0 * percentage);
         }
 
+        public void RemoveType()
+        {
+            xtype.Remove();
+        }
+
         /*
         <type name="AKM">
             <nominal>40</nominal>

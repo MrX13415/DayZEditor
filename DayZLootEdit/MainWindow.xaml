@@ -16,7 +16,7 @@
             <RowDefinition Height="285*"/>
             <RowDefinition Height="134*"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="LootList" Margin="10,60,10,10" Grid.RowSpan="2" ItemsSource="{Binding LootTable.Loot}" IsEnabled="False" SelectionChanged="LootList_SelectionChanged" Grid.ColumnSpan="3">
+        <DataGrid x:Name="LootList" Margin="10,60,10,10" Grid.RowSpan="2" ItemsSource="{Binding LootTable.Loot}" IsEnabled="False" SelectionChanged="LootList_SelectionChanged" PreviewKeyDown="PreviewKeyDownHandler" Grid.ColumnSpan="3">
         </DataGrid>
         <Button x:Name="LoadBtn" Content="Load" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="40" Height="40" Click="LoadBtn_Click"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="55,10,0,0" VerticalAlignment="Top" Width="40" Height="40"/>
