@@ -29,9 +29,10 @@ namespace DayZLootEdit
             set { xtype.Element("nominal")?.SetValue(value.ToString()); }
         }
 
+        //Edited the get function
         public int Lifetime
         {
-            get { return Lifetime = GetValueInt(xtype, "lifetime"); }
+            get { return GetValueInt(xtype, "lifetime"); }
             set { xtype.Element("lifetime")?.SetValue(value.ToString()); }
         }
         public int Restock
@@ -155,6 +156,43 @@ namespace DayZLootEdit
         {
             Nominal = (int) Math.Round(Nominal / 100.0 * percentage);
         }
+
+        //New code to Set Lifetime
+        public void SetLifetime(int percentage)
+        {
+            Lifetime = (int)Math.Round(Lifetime / 100.0 * percentage);
+
+            if (Lifetime >= 3888000)
+            {
+                Lifetime = 3888000;
+            }
+        }
+
+        public void SetLifetimeMax(int time)
+        {
+            Lifetime = time;
+        }
+
+        // New code for Quantity Min/Max Buttons
+        public void SetMinQuantity(int percentage)
+        {
+            if (QuantMin != -1)
+            {
+                QuantMin = percentage;
+            }
+
+        }
+
+        public void SetMaxQuantity(int percentage)
+        {
+            if (QuantMax != -1)
+            {
+                QuantMax = percentage;
+            }
+
+        }
+
+        //End new code
 
         public void RemoveType()
         {

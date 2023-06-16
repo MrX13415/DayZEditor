@@ -17,8 +17,9 @@ using System.Windows.Shapes;
 namespace DayZLootEdit
 {
     /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
+    /// Interaction Logic for MainWindow.xaml
     /// </summary>
+
     public partial class MainWindow : Window
     {
         private LootTable LootTable;
@@ -45,15 +46,19 @@ namespace DayZLootEdit
             }
         }
 
+        //Added "Nominal" prefix and then a new line for the Lifetime
         private void LootList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            LootPercBox.IsEnabled = LootList.SelectedItems.Count > 0;
+            NominalLootPercBox.IsEnabled = LootList.SelectedItems.Count > 0;
+            LifetimeLootPercBox.IsEnabled = LootList.SelectedItems.Count > 0;
+            FillQtyBox.IsEnabled = LootList.SelectedItems.Count > 0;
         }
 
-        private void PercBtn_Click(object sender, RoutedEventArgs e)
+        // Added "Nominal" prefix to variables used in the Nominal dock panel
+        private void NominalPercBtn_Click(object sender, RoutedEventArgs e)
         {
             int percentage = 0;
-            bool ok = int.TryParse(PercBox.Text.Replace("%", ""), out percentage);
+            bool ok = int.TryParse(NominalPercBox.Text.Replace("%", ""), out percentage);
             if (!ok) return;
 
             foreach (LootType loot in LootList.SelectedItems)
@@ -63,46 +68,141 @@ namespace DayZLootEdit
 
             LootList.Items.Refresh();
 
-            PercBox.Text = "0";
-            UpdatePercValue();
+            // NominalPercBox.Text = "0";
+            UpdateNominalPercValue();
         }
 
-        private void PercSilder_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void NominalPercSilder_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            PercBox.Text = Math.Round(PercSilder.Value).ToString();
-            UpdatePercValue();
+            NominalPercBox.Text = Math.Round(NominalPercSilder.Value).ToString();
+            UpdateNominalPercValue();
         }
         
-        private void PercBox_GotFocus(object sender, RoutedEventArgs e)
+        private void NominalPercBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            PercBox.SelectAll();
+            NominalPercBox.SelectAll();
         }
 
-        private void PercBox_LostFocus(object sender, RoutedEventArgs e)
+        private void NominalPercBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            UpdatePercValue();
+            UpdateNominalPercValue();
         }
 
-        private void PercBox_KeyUp(object sender, KeyEventArgs e)
+        private void NominalPercBox_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                UpdatePercValue();
+                UpdateNominalPercValue();
             }
         }
         
-        private void UpdatePercValue()
+        private void UpdateNominalPercValue()
         {
             int newval = 0;
-            bool ok = int.TryParse(PercBox.Text.Replace("%", ""), out newval);
+            bool ok = int.TryParse(NominalPercBox.Text.Replace("%", ""), out newval);
 
             if (ok)
             {
-                PercSilder.Value = newval;
-                PercBox.Text = String.Format("{0}%", newval);
-                PercBtn?.Focus();
+                NominalPercSilder.Value = newval;
+                NominalPercBox.Text = String.Format("{0}%", newval);
+                NominalPercBtn?.Focus();
             }
         }
+
+        //New code for "Lifetime" manipulations
+        private void LifetimePercBtn_Click(object sender, RoutedEventArgs e)
+        {
+            int percentage = 0;
+            bool ok = int.TryParse(LifetimePercBox.Text.Replace("%", ""), out percentage);
+            if (!ok) return;
+
+            foreach (LootType loot in LootList.SelectedItems)
+            {
+                loot.SetLifetime(percentage);
+            }
+
+            LootList.Items.Refresh();
+
+            // LifetimePercBox.Text = "0";
+            UpdateLifetimePercValue();
+        }
+
+        private void LifetimePercSilder_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            LifetimePercBox.Text = Math.Round(LifetimePercSilder.Value).ToString();
+            UpdateLifetimePercValue();
+        }
+
+        private void LifetimePercBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            LifetimePercBox.SelectAll();
+        }
+
+        private void LifetimePercBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            UpdateLifetimePercValue();
+        }
+
+        private void LifetimePercBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                UpdateLifetimePercValue();
+            }
+        }
+
+        private void UpdateLifetimePercValue()
+        {
+            int newval = 0;
+            bool ok = int.TryParse(LifetimePercBox.Text.Replace("%", ""), out newval);
+
+            if (ok)
+            {
+                LifetimePercSilder.Value = newval;
+                LifetimePercBox.Text = String.Format("{0}%", newval);
+                LifetimePercBtn?.Focus();
+            }
+        }
+
+        private void LifetimePercMaxBtn_Click(object sender, RoutedEventArgs e)
+        {
+            int time = 3888000;
+
+            foreach (LootType loot in LootList.SelectedItems)
+            {
+                loot.SetLifetimeMax(time);
+            }
+
+            LootList.Items.Refresh();
+        }
+
+        // New code for Fill Quantity Min/Max Buttons
+
+        private void FillMinQtyBtn_Click(object sender, RoutedEventArgs e)
+        {
+            int percentage = 100;
+
+            foreach (LootType loot in LootList.SelectedItems)
+            {
+                loot.SetMinQuantity(percentage);
+            }
+
+            LootList.Items.Refresh();
+        }
+
+        private void FillMaxQtyBtn_Click(object sender, RoutedEventArgs e)
+        {
+            int percentage = 100;
+
+            foreach (LootType loot in LootList.SelectedItems)
+            {
+                loot.SetMaxQuantity(percentage);
+            }
+
+            LootList.Items.Refresh();
+        }
+
+        // End of new code
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
